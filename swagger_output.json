@@ -1,0 +1,1087 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Beach Tennis API",
+    "description": "Documentação do projeto de gerenciamento de campeonatos de Beach Tennis."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Rotas para o gerenciamento de usuários."
+    },
+    {
+      "name": "Locations",
+      "description": "Rotas para o gerenciamento de localizações."
+    },
+    {
+      "name": "Championships",
+      "description": "Rotas para o gerenciamento de campeonatos."
+    },
+    {
+      "name": "Auth",
+      "description": "Rotas para o gerenciamento de autenticação."
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    },
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "read_pets": "read your pets",
+        "write_pets": "modify pets in your account"
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/locations": {
+      "post": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Endpoint para criação de Localizações",
+        "parameters": [
+          {
+            "name": "Criar localização",
+            "in": "body",
+            "description": "Criar uma localização.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateLocationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Local criado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/CreateLocationResponse"
+            }
+          },
+          "400": {
+            "description": "Existe um erro na validação dos campos"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Endpoint para listagem de localizações",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Localizações retornadas.",
+            "schema": {
+              "$ref": "#/definitions/GetLocationsResponse"
+            }
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      }
+    },
+    "/locations/{id}": {
+      "delete": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Endpoint para a exclusão de localizações",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Local deletado com sucesso"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          },
+          "404": {
+            "description": "Local não existente"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Rota para a edição de localizações",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Editar localização",
+            "in": "body",
+            "description": "Editar uma localização.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EditLocationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Local editado com sucesso"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          },
+          "404": {
+            "description": "Local não existente"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint para criar novos usuarios enquanto admininstrador",
+        "parameters": [
+          {
+            "name": "Criar usuario",
+            "in": "body",
+            "description": "Criar um usuario.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado.",
+            "schema": {
+              "$ref": "#/definitions/CreateUserResponse"
+            }
+          },
+          "400": {
+            "description": "Existem erros de validação"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint para retornar todos os usuarios",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios.",
+            "schema": {
+              "$ref": "#/definitions/GetUsersResponse"
+            }
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint para deletar usuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuario deletado com sucesso"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          },
+          "404": {
+            "description": "Usuario não existente"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "description": "Rota para atualizar usuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Editar usuario",
+            "in": "body",
+            "description": "Editar um usuario.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EditUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuario editado com sucesso"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          },
+          "404": {
+            "description": "Usuario não existente"
+          }
+        }
+      }
+    },
+    "/championships": {
+      "post": {
+        "tags": [
+          "Championships"
+        ],
+        "description": "Rota para a criação de campeonatos",
+        "parameters": [
+          {
+            "name": "Novo Campeonato",
+            "in": "body",
+            "description": "Informações do campeonato.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateChampionshipRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Criação de campeonatos.",
+            "schema": {
+              "$ref": "#/definitions/CreateChampionshipResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Championships"
+        ],
+        "description": "Rota para a inscrição de atletas em campeonatos",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Listagem de campeonatos.",
+            "schema": {
+              "$ref": "#/definitions/GetChampionshipsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/championships/{id}": {
+      "patch": {
+        "tags": [
+          "Championships"
+        ],
+        "description": "Rota para a edição de campeonatos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Editar Campeonato",
+            "in": "body",
+            "description": "Editar informações do campeonato.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EditChampionshipRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Edição de campeonatos bem sucedida."
+          },
+          "400": {
+            "description": "Existe um erro na validação dos campos"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Championships"
+        ],
+        "description": "Rota para a exclusão de campeonatos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Campeonato deletado com sucesso"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          },
+          "404": {
+            "description": "Campeonato não existente"
+          }
+        }
+      }
+    },
+    "/enrollChampionship": {
+      "post": {
+        "tags": [
+          "Championships"
+        ],
+        "description": "Rota para a inscrição de atletas em campeonatos",
+        "parameters": [
+          {
+            "name": "Inscrever em campeonato",
+            "in": "body",
+            "description": "Inscreve-se em um campeonato.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostEnrollChampionshipRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inscrição feita com sucesso"
+          },
+          "400": {
+            "description": "Problema na validação de inscrição"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          }
+        }
+      }
+    },
+    "/auth/signIn": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Rota para login",
+        "parameters": [
+          {
+            "name": "Login",
+            "in": "body",
+            "description": "Informações do login.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostLoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rota de login.",
+            "schema": {
+              "$ref": "#/definitions/PostLoginResponse"
+            }
+          },
+          "401": {
+            "description": "Usuario ou senha invalido"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Rota para registro",
+        "parameters": [
+          {
+            "name": "Novo Usuario",
+            "in": "body",
+            "description": "Informações do usuário.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostRegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado.",
+            "schema": {
+              "$ref": "#/definitions/PostRegisterResponse"
+            }
+          },
+          "400": {
+            "description": "Existem erros de validação"
+          }
+        }
+      }
+    },
+    "/match/consolidate/{id}": {
+      "patch": {
+        "tags": [
+          "Matches"
+        ],
+        "description": "Rota para a consolidação de partidas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Consolidar partida",
+            "in": "body",
+            "description": "Consolidar uma partida.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateMatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Partida consolidada com sucesso"
+          },
+          "401": {
+            "description": "Usuario não autenticado"
+          },
+          "404": {
+            "description": "Partida não existente"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateUserResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jefferson"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Male"
+        },
+        "email": {
+          "type": "string",
+          "example": "jefferson@email.com"
+        },
+        "type": {
+          "type": "string",
+          "example": "admin"
+        },
+        "id": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "CreateUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jefferson"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Male"
+        },
+        "email": {
+          "type": "string",
+          "example": "jefferson@email.com"
+        },
+        "type": {
+          "type": "string",
+          "example": "admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "passwordConfirmation": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "name",
+        "gender",
+        "email",
+        "type",
+        "password",
+        "passwordConfirmation"
+      ]
+    },
+    "EditUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jefferson"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Male"
+        },
+        "type": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "GetUsersResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Jefferson"
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "email": {
+            "type": "string",
+            "example": "jefferson@email.com"
+          },
+          "type": {
+            "type": "string",
+            "example": "admin"
+          },
+          "id": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      }
+    },
+    "CreateLocationRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Arena"
+        },
+        "numberOfCourts": {
+          "type": "number",
+          "example": 10
+        }
+      },
+      "required": [
+        "name",
+        "numberOfCourts"
+      ]
+    },
+    "CreateLocationResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Arena"
+        },
+        "numberOfCourts": {
+          "type": "number",
+          "example": 10
+        },
+        "id": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "GetLocationsResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Arena"
+          },
+          "numberOfCourts": {
+            "type": "number",
+            "example": 10
+          },
+          "id": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "name",
+          "numberOfCourts"
+        ]
+      }
+    },
+    "EditLocationRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Arena"
+        },
+        "numberOfCourts": {
+          "type": "number",
+          "example": 10
+        }
+      }
+    },
+    "CreateChampionshipResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Campeonato de Beach Tennis"
+        },
+        "category": {
+          "type": "string",
+          "example": "male"
+        },
+        "numberOfParticipants": {
+          "type": "number",
+          "example": 8
+        },
+        "description": {
+          "type": "string",
+          "example": "Um Campeonato de Beach Tennis"
+        },
+        "enrollStartDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "enrollEndDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2020-12-31"
+        },
+        "locationId": {
+          "type": "number",
+          "example": 1
+        },
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "points": {
+                "type": "array",
+                "example": [
+                  6,
+                  4
+                ],
+                "items": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Jefferson"
+              },
+              "gender": {
+                "type": "string",
+                "example": "Male"
+              },
+              "email": {
+                "type": "string",
+                "example": "jefferson@email.com"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CreateChampionshipRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Campeonato de Beach Tennis"
+        },
+        "category": {
+          "type": "string",
+          "example": "male"
+        },
+        "numberOfParticipants": {
+          "type": "number",
+          "example": 8
+        },
+        "description": {
+          "type": "string",
+          "example": "Um Campeonato de Beach Tennis"
+        },
+        "enrollStartDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "enrollEndDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2020-12-31"
+        },
+        "locationId": {
+          "type": "number",
+          "example": 1
+        }
+      },
+      "required": [
+        "name",
+        "category",
+        "numberOfParticipants",
+        "description",
+        "enrollStartDate",
+        "enrollEndDate",
+        "startDate",
+        "endDate",
+        "locationId"
+      ]
+    },
+    "EditChampionshipRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Campeonato de Beach Tennis"
+        },
+        "category": {
+          "type": "string",
+          "example": "male"
+        },
+        "numberOfParticipants": {
+          "type": "number",
+          "example": 8
+        },
+        "description": {
+          "type": "string",
+          "example": "Um Campeonato de Beach Tennis"
+        },
+        "enrollStartDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "enrollEndDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2020-01-01"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2020-12-31"
+        },
+        "locationId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "GetChampionshipsResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Campeonato de Beach Tennis"
+          },
+          "category": {
+            "type": "string",
+            "example": "male"
+          },
+          "numberOfParticipants": {
+            "type": "number",
+            "example": 8
+          },
+          "description": {
+            "type": "string",
+            "example": "Um Campeonato de Beach Tennis"
+          },
+          "enrollStartDate": {
+            "type": "string",
+            "example": "2020-01-01"
+          },
+          "enrollEndDate": {
+            "type": "string",
+            "example": "2020-01-01"
+          },
+          "startDate": {
+            "type": "string",
+            "example": "2020-01-01"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "2020-12-31"
+          },
+          "locationId": {
+            "type": "number",
+            "example": 1
+          },
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "points": {
+                  "type": "array",
+                  "example": [
+                    6,
+                    4
+                  ],
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Jefferson"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Male"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "jefferson@email.com"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostEnrollChampionshipRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "number",
+          "example": 1
+        },
+        "pairId": {
+          "type": "number",
+          "example": 2
+        },
+        "championshipId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "PostLoginRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "email@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "PostLoginResponse": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "email@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "token": {
+          "type": "string",
+          "example": "token"
+        },
+        "id": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "PostRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jefferson"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Male"
+        },
+        "email": {
+          "type": "string",
+          "example": "jefferson@email.com"
+        },
+        "type": {
+          "type": "string",
+          "example": "Admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "passwordConfirmation": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "name",
+        "gender",
+        "email",
+        "type"
+      ]
+    },
+    "PostRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jefferson"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Male"
+        },
+        "email": {
+          "type": "string",
+          "example": "jefferson@email.com"
+        },
+        "type": {
+          "type": "string",
+          "example": "Admin"
+        },
+        "id": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "UpdateMatchRequest": {
+      "type": "object",
+      "properties": {
+        "points": {
+          "type": "array",
+          "example": [
+            6,
+            4
+          ],
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
