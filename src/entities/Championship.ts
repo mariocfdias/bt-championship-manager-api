@@ -2,6 +2,7 @@ import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable,
 import { User } from './User'
 import { Match } from './Match'
 import { v4 as uuid } from 'uuid'
+import { Location } from './Location';
 
 @Entity('championships')
 export class Championship {
@@ -32,15 +33,13 @@ export class Championship {
     @Column()
     public endDate: Date;
 
-    @Column()
     @OneToOne(type => Location)
     public location : Location
 
-    @Column()
     @OneToMany(type => Match, matches => matches.championship)
     public matches : Match[]
 
-    @ManyToMany(() => User, user => user.championships)
+    @ManyToMany(type => User, user => user.championships)
     @JoinTable({
        name: "championships_participants_users",
        joinColumn: {

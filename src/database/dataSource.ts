@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm"
+import "reflect-metadata";
 
 export const AppDataSource = new DataSource({
     type: "sqlite",

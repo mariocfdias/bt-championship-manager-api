@@ -14,15 +14,12 @@ export class Match {
     @Column()
     public number: string;
 
-    @Column()
-    @OneToOne(() => User)
+    @OneToOne(() => User, user => user.id)
     public firstParticipant : User
 
-    @OneToOne(() => User)
-    @Column()
+    @OneToOne(() => User, user => user.id)
     public secondParticipant: User
 
-    @Column()
     @ManyToOne(type => Championship, championship => championship.matches)
     public championship : Championship
 
