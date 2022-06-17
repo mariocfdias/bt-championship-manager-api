@@ -10,6 +10,7 @@ export class ChampionshipController {
         console.log(req.body)
         const { category, name, numberOfParticipants, description, enrollStartDate, enrollEndDate, startDate, endDate } = req.body;
 
+        
         const service = new ChampionshipService();
         /* #swagger.parameters['Novo Campeonato'] = {
                in: 'body',

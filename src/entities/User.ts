@@ -13,6 +13,15 @@ export class User {
     @Column()
     public password: string
 
+    @Column()
+    public email: string
+
+    @Column()
+    public gender: string
+
+    @Column()
+    public type: string
+
     @ManyToMany(() => Championship, championship => championship.participants)
     public championships : Championship[]
 

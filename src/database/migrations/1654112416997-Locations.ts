@@ -13,11 +13,11 @@ export class Locations1654112416997 implements MigrationInterface {
                         isPrimary: true
                     },
                     {
-                        name: 'cep',
+                        name: 'name',
                         type: 'varchar'
                     },
                     {
-                        name: 'number',
+                        name: 'numberOfCourts',
                         type: 'varchar'                    
                     },
                     

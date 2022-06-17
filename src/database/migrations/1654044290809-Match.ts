@@ -18,9 +18,14 @@ export class Match1654044290809 implements MigrationInterface {
                         isUnique: true
                     },
                     {
-                        name: 'participant_id',
+                        name: 'first_participant_id',
                         type: 'uuid'                    
                     },
+                    {
+                        name: 'second_participant_id',
+                        type: 'uuid'                    
+                    },
+                    
                     {
                         name: 'championship_id',
                         type: 'uuid'
@@ -29,13 +34,21 @@ export class Match1654044290809 implements MigrationInterface {
                 ],
                 foreignKeys: [
                     {
-                      name: "participants",
+                      name: "firstParticipant",
                       referencedTableName: "users",
                       referencedColumnNames: ["id"],
                       columnNames: ["participant_id"],
                       onDelete: "CASCADE",
                       onUpdate: "CASCADE",
                     },
+                    {
+                        name: "secondParticipant",
+                        referencedTableName: "users",
+                        referencedColumnNames: ["id"],
+                        columnNames: ["participant_id"],
+                        onDelete: "CASCADE",
+                        onUpdate: "CASCADE",
+                      },
                     {
                         name: "championships",
                         referencedTableName: "championships",

@@ -7,10 +7,12 @@ export class Location {
     public id: string;
 
     @Column()
-    public cep: string;
+    public name: string;
 
     @Column()
-    public number: string;
+    public numberOfCourts: number;
+
+    
 
     
 

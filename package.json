@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --transpile-only src/server.ts",
-    "typeorm": "ts-node-dev  node_modules/typeorm/cli.js",
-    "swagger-autogen": "node src/swagger.js"
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
+    "swagger-autogen": "node src/swagger.js",
+    "migrations:run" : "ts-node-dev node_modules/typeorm/cli.js -- migration:run -d src/database/dataSource.ts"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
