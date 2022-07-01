@@ -1,0 +1,42 @@
+name: Build de projeto
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+jobs:
+  deploy-web:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout para branch main
+      uses: actions/checkout@v2
+
+    - name: Configura NodeJs
+      uses: actions/setup-node@v2
+      with:
+          node-version: "16.x"
+          
+    - name: Configurar Yarn 
+      run: npm install -g yarn
+
+    - name: Instalar dependencias
+      run: yarn install
+    
+    - name: Rodar Migrations
+      run: yarn install
+      
+      
+    - name: Gerar documentação Swagger
+      run: yarn swagger-autogen
+
+    - name: Buildar projeto
+      run: yarn build
+      
+    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "beachtennis-rest-api"
+        heroku_email: "mariocesarfreire@alu.ufc.br"
