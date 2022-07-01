@@ -32,8 +32,6 @@ jobs:
     - name: Gerar documentação Swagger
       run: yarn swagger-autogen
 
-    - name: Buildar projeto
-      run: yarn dev
       
     - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
