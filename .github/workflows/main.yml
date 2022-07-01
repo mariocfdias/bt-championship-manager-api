@@ -33,7 +33,7 @@ jobs:
       run: yarn swagger-autogen
 
     - name: Buildar projeto
-      run: yarn build
+      run: yarn dev
       
     - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
