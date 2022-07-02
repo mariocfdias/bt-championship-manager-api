@@ -1,23 +1,59 @@
+import { StringifyOptions } from 'querystring';
 import {AppDataSource} from '../database/dataSource'
 import { User } from '../entities/User'
 
-type CreateUserRequestt = {
+type CreateUserRequest = {
     username: string;
     password: string;
+    email: string;
+    type: string;
+    gender: string;
 }
 
+const USERNAME_MIN = 3, USERNAME_MAX = 30;
+const PASSWORD_MIN = 8, PASSWORD_MAX = 30;
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
 export class UserService {
-    async create({username, password} : CreateUserRequestt) : Promise<User | Error> {
+    handleFieldLimit(name : string, value : string, minLimit : Number, maxLimit : Number) : string {
+        if (value.length < minLimit) {
+            return `${name} deve ter pelo menos ${minLimit} caracteres!`;
+        }
+        if (value.length > maxLimit) {
+            return `${name} pode ter no máximo ${maxLimit} caracteres!`;
+        }
+        return "";
+    }
+
+    async create({username, password, gender, email, type} : CreateUserRequest) : Promise<User | Error> {
         
+        let invalid = this.handleFieldLimit("O nome de usuário", username, USERNAME_MIN, USERNAME_MAX);
+        if (!invalid) {
+            invalid = this.handleFieldLimit("A senha", password, PASSWORD_MIN, PASSWORD_MAX);
+        }
+        if (!invalid && !EMAIL_REGEX.test(email)) {
+            invalid = "Email inválido!"; 
+        }
+        if (!invalid && !type) {
+            invalid = "Informe o tipo de conta!";
+        }
+        if (invalid) {
+            return new Error(invalid);
+        }
         const userRepository = AppDataSource.getRepository(User);
 
-        const isAreadlyUser = await userRepository.findOneBy({username})
+        const isAlreadyUser = await userRepository.findOneBy({username})
 
-        if(isAreadlyUser){
-            return new Error('Usuario com esse nome ja existe')
+        if (isAlreadyUser) {
+            return new Error('Usuário com esse nome já existe.')
+        }
+        const isAlreadyEmail = await userRepository.findOneBy({email})
+        
+        if (isAlreadyEmail) {
+            return new Error('Email já está em uso!')
         }
 
-        const user = userRepository.create({username, password})
+        const user = userRepository.create({username, password, gender, email, type});
 
         await userRepository.save(user);
 
@@ -44,7 +80,7 @@ export class UserService {
         })
 
         if(!existsUser){
-            return Error('Essa usuario não existe')
+            return Error('Esse usuario não existe')
         }
 
 
