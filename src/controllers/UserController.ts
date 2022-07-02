@@ -7,8 +7,7 @@ export class UserController {
          #swagger.tags = ['User']
          #swagger.description = 'Endpoint para criar novos usuarios enquanto admininstrador'
          */
-
-        console.log(req.body)
+        
         const { username, password, gender, email, type} = req.body;
         const service = new UserService();
 
