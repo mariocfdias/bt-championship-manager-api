@@ -4,10 +4,10 @@ import { User } from '../entities/User'
 
 type CreateUserRequest = {
     username: string;
-    password: string;
+    gender: string;
     email: string;
     type: string;
-    gender: string;
+    password: string;
 }
 
 const USERNAME_MIN = 3, USERNAME_MAX = 30;
@@ -55,6 +55,8 @@ export class UserService {
 
         const user = userRepository.create({username, password, gender, email, type});
 
+
+        console.log(user)
         await userRepository.save(user);
 
         return user;
