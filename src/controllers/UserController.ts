@@ -9,28 +9,27 @@ export class UserController {
          */
 
         console.log(req.body)
-        const { username, password} = req.body;
-
+        const { username, password, gender, email, type} = req.body;
         const service = new UserService();
 
-        const result = await service.create({username, password});
-  /* #swagger.parameters['Criar usuario'] = {
+        const result = await service.create({username, password, gender, email, type});
+        /* #swagger.parameters['Criar usuario'] = {
                in: 'body',
                description: 'Criar um usuario.',
-               required: true,
+               required: true,s
                schema: { $ref: "#/definitions/CreateUserRequest" }
         } */
-        if(result instanceof Error){
+        if (result instanceof Error){
             return res.status(400).json(result.message)
         }
-             /* #swagger.responses[201] = { 
+        /* #swagger.responses[201] = { 
                schema: { $ref: "#/definitions/CreateUserResponse" },
                description: 'Usuário cadastrado.' 
         } */
                 // #swagger.responses[401] = { description: 'Usuario não autenticado' }
 
         // #swagger.responses[400] = { description: 'Existem erros de validação' }
-        return res.status(201).json(result)
+        return res.status(201).json({message: 'Usuário criado com sucesso!'})
     }
     
 
