@@ -25,16 +25,3 @@ jobs:
     - name: Instalar dependencias
       run: yarn install
     
-    - name: Rodar Migrations
-      run: yarn install
-      
-      
-    - name: Gerar documentação Swagger
-      run: yarn swagger-autogen
-
-      
-    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "beachtennis-rest-api"
-        heroku_email: "mariocesarfreire@alu.ufc.br"
