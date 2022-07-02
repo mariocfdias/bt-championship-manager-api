@@ -9,11 +9,11 @@ export class UserController {
          */
 
         console.log(req.body)
-        const { username, password} = req.body;
+        const {username, password, gender, email, type} = req.body;
 
         const service = new UserService();
 
-        const result = await service.create({username, password});
+        const result = await service.create({username, password, gender, email, type});
   /* #swagger.parameters['Criar usuario'] = {
                in: 'body',
                description: 'Criar um usuario.',

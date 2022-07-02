@@ -12,6 +12,11 @@ export class Location {
     @Column()
     public numberOfCourts: number;
 
+    @Column()
+    public cep: string;
+
+    @Column()
+    public number: string;
     
 
     
