@@ -10,13 +10,13 @@ type CreateUserRequest = {
     gender: string;
 }
 
-const USERNAME_MIN = 3, USERNAME_MAX = 30;
+const USERNAME_MIN = 3, USERNAME_MAX = 100;
 const PASSWORD_MIN = 8, PASSWORD_MAX = 30;
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export class UserService {
     handleFieldLimit(name : string, value : string, minLimit : Number, maxLimit : Number) : string {
-        if (value.length < minLimit) {
+        if (!value || value.length < minLimit) {
             return `${name} deve ter pelo menos ${minLimit} caracteres!`;
         }
         if (value.length > maxLimit) {
@@ -26,8 +26,7 @@ export class UserService {
     }
 
     async create({username, password, gender, email, type} : CreateUserRequest) : Promise<User | Error> {
-        
-        let invalid = this.handleFieldLimit("O nome de usuário", username, USERNAME_MIN, USERNAME_MAX);
+        let invalid = this.handleFieldLimit("O nome ", username, USERNAME_MIN, USERNAME_MAX);
         if (!invalid) {
             invalid = this.handleFieldLimit("A senha", password, PASSWORD_MIN, PASSWORD_MAX);
         }
@@ -40,13 +39,8 @@ export class UserService {
         if (invalid) {
             return new Error(invalid);
         }
+
         const userRepository = AppDataSource.getRepository(User);
-
-        const isAlreadyUser = await userRepository.findOneBy({username})
-
-        if (isAlreadyUser) {
-            return new Error('Usuário com esse nome já existe.')
-        }
         const isAlreadyEmail = await userRepository.findOneBy({email})
         
         if (isAlreadyEmail) {
