@@ -5,10 +5,10 @@ import { User } from '../entities/User'
 import bcrypt from 'bcrypt';
 type CreateUserRequest = {
     username: string;
-    password: string;
+    gender: string;
     email: string;
     type: string;
-    gender: string;
+    password: string;
 }
 
 const SALT_ROUNDS = 10;
@@ -52,6 +52,8 @@ export class UserService {
         password = await bcrypt.hash(password, SALT_ROUNDS);
         const user = userRepository.create({username, password, gender, email, type});
 
+
+        console.log(user)
         await userRepository.save(user);
 
         return user;

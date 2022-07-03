@@ -9,10 +9,7 @@ export class Match {
     public id: number;
 
     @Column()
-    public cep: string;
-
-    @Column()
-    public number: string;
+    public name: string;
 
     @OneToOne(() => User, user => user.id)
     public firstParticipant : User
