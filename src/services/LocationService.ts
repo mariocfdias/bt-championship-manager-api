@@ -2,17 +2,20 @@ import {AppDataSource} from '../database/dataSource'
 import { Location } from '../entities/Location'
 
 type CreateLocationRequest = {
-    cep: string;
-    number: string;
+    cep: String;
+    number: String;
+    address: String;
+    name: String;
+    numberOfCourts: number;
 }
 
 export class LocationService {
-    async create({cep, number} : CreateLocationRequest) : Promise<Location | Error> {
+    async create({cep, number, address, numberOfCourts, name} : CreateLocationRequest) : Promise<Location | Error> {
         
         const LocationRepository = AppDataSource.getRepository(Location);
 
         const isAreadlyLocation = await LocationRepository.findOneBy({
-            cep, number
+            cep
         })
 
         if(isAreadlyLocation){
@@ -21,8 +24,11 @@ export class LocationService {
 
         const location = LocationRepository.create({
             cep,
-            number
-        })
+            number,
+            address,
+            numberOfCourts,
+            name
+        }) 
 
         await LocationRepository.save(location);
 
@@ -58,4 +64,6 @@ export class LocationService {
         return deletedLocation;
 
     }
+
+    
 }

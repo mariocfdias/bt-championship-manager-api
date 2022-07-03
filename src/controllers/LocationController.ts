@@ -8,11 +8,13 @@ export class LocationController {
          #swagger.description = 'Endpoint para criação de Localizações' */
 
         console.log(req.body)
-        const { cep, number, adress} = req.body;
+        const { cep, number, address, name, numberOfCourts} = req.body;
+
+        console.log({teste: req.body})
 
         const service = new LocationService();
 
-        const result = await service.create({cep, number});
+        const result = await service.create({cep, number, address, numberOfCourts, name});
 /* #swagger.parameters['Criar localização'] = {
                in: 'body',
                description: 'Criar uma localização.',

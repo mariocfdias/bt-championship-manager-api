@@ -9,7 +9,7 @@ const routes = Router()
 
 routes.post("/locations", new LocationController().create)
 routes.get("/locations", new LocationController().getAll)
-routes.delete("/locations/:id", new LocationController().delete)
+routes.delete("/locations", new LocationController().delete)
 routes.patch("/locations/:id", new LocationController().update)
 
 

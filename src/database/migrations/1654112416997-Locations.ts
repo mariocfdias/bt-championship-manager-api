@@ -20,6 +20,18 @@ export class Locations1654112416997 implements MigrationInterface {
                         name: 'numberOfCourts',
                         type: 'varchar'                    
                     },
+                    {
+                        name: 'cep',
+                        type: 'varchar'                    
+                    },
+                    {
+                        name: 'address',
+                        type: 'varchar'                    
+                    },     
+                    {
+                        name: 'number',
+                        type: 'varchar'                    
+                    },
                     
                 
                 ]

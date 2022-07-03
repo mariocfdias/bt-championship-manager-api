@@ -13,10 +13,14 @@ export class Location {
     public numberOfCourts: number;
 
     @Column()
-    public cep: string;
+    public cep: String;
 
     @Column()
-    public number: string;
+    public number: String;
+
+    @Column()
+    public address: string;
+    
     
 
     
