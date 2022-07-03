@@ -9,8 +9,10 @@ export class Match1654044290809 implements MigrationInterface {
                 columns: [
                     {
                         name: 'id',
-                        type: 'uuid',
-                        isPrimary: true
+                        type: 'integer',
+                        isPrimary: true,
+                        isGenerated: true,
+                        generationStrategy: 'increment'
                     },
                     {
                         name: 'name',
@@ -19,16 +21,16 @@ export class Match1654044290809 implements MigrationInterface {
                     },
                     {
                         name: 'first_participant_id',
-                        type: 'uuid'                    
+                        type: 'int'                    
                     },
                     {
                         name: 'second_participant_id',
-                        type: 'uuid'                    
+                        type: 'int'                    
                     },
                     
                     {
                         name: 'championship_id',
-                        type: 'uuid'
+                        type: 'int'
                     }
 
                 ],

@@ -9,8 +9,10 @@ export class Championship1654044271509 implements MigrationInterface {
                 columns: [
                     {
                         name: 'id',
-                        type: 'uuid',
-                        isPrimary: true
+                        type: 'integer',
+                        isPrimary: true,
+                        isGenerated: true,
+                        generationStrategy: 'increment'
                     },
                     {
                         name: 'name',
@@ -24,7 +26,7 @@ export class Championship1654044271509 implements MigrationInterface {
                     },
                     {
                         name: 'numberOfParticipants',
-                        type: 'number',
+                        type: 'int',
                         isUnique: true
                     },
                     {
@@ -50,7 +52,7 @@ export class Championship1654044271509 implements MigrationInterface {
                     },
                     {
                         name: 'location_id',
-                        type: 'uuid'
+                        type: 'int'
                     }
                 ],
                 foreignKeys: [

@@ -67,7 +67,7 @@ export class MatchController {
         */
          // #swagger.responses[204] = { description: 'Campeonato atualizado com sucesso' }
         // #swagger.responses[400] = { description: 'Existe um erro na validação dos campos' }
-         const { category, name, numberOfParticipants, description, enrollStartDate, enrollEndDate, startDate, endDate } = req.body;
+         const { id, category, name, numberOfParticipants, description, enrollStartDate, enrollEndDate, startDate, endDate } = req.body;
 
         const service = new ChampionshipService();
 

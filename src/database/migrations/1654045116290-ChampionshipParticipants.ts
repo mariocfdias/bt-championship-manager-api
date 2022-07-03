@@ -7,14 +7,12 @@ export class ChampionshipParticipants1654045116290 implements MigrationInterface
             name: 'championships_participants_users',
             columns: [
                 {
-                     name: 'championshipId',
-                     type: 'uuid',
-                     isPrimary: true,
+                    name: 'championshipId',
+                    type: 'integer',
                 },
                 {
-                     name: 'participantId',
-                     type: 'uuid',
-                     isPrimary: true,
+                    name: 'participantId',
+                    type: 'integer',
                 },
             ],
             foreignKeys: [

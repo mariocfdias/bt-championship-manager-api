@@ -1,10 +1,10 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm'
+import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 
 @Entity('locations')
 export class Location {
-    @PrimaryColumn()
-    public id: string;
+    @PrimaryGeneratedColumn('increment')
+    public id: number;
 
     @Column()
     public name: string;
@@ -12,16 +12,5 @@ export class Location {
     @Column()
     public numberOfCourts: number;
 
-    
-
-    
-
-
-    constructor(){
-        if(!this.id){
-            this.id = uuid()
-
-        }
-    }
 }
 

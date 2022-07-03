@@ -1,4 +1,4 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, OneToMany } from 'typeorm'
+import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, OneToMany } from 'typeorm'
 import { User } from './User'
 import { Match } from './Match'
 import { v4 as uuid } from 'uuid'
@@ -6,8 +6,8 @@ import { Location } from './Location';
 
 @Entity('championships')
 export class Championship {
-    @PrimaryColumn()
-    public id: string;
+    @PrimaryGeneratedColumn('increment')
+    public id: number;
 
     @Column()
     public name: string;
@@ -56,11 +56,5 @@ export class Championship {
     
 
 
-    constructor(){
-        if(!this.id){
-            this.id = uuid()
-
-        }
-    }
 }
 

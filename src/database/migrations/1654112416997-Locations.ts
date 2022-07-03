@@ -9,8 +9,10 @@ export class Locations1654112416997 implements MigrationInterface {
                 columns: [
                     {
                         name: 'id',
-                        type: 'uuid',
-                        isPrimary: true
+                        type: 'integer',
+                        isPrimary: true,
+                        isGenerated: true,
+                        generationStrategy: 'increment'
                     },
                     {
                         name: 'name',
@@ -18,7 +20,7 @@ export class Locations1654112416997 implements MigrationInterface {
                     },
                     {
                         name: 'numberOfCourts',
-                        type: 'varchar'                    
+                        type: 'int'                    
                     },
                     
                 
