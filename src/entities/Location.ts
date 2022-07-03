@@ -13,7 +13,7 @@ export class Location {
     public numberOfCourts: number;
 
     @Column()
-    public cep: String;
+    public cep: string;
 
     @Column()
     public number: String;

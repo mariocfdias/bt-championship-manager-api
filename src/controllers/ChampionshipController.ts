@@ -8,7 +8,7 @@ export class ChampionshipController {
          #swagger.description = 'Rota para a criação de campeonatos'
         */
         console.log(req.body)
-        const { category, name, numberOfParticipants, description, enrollStartDate, enrollEndDate, startDate, endDate } = req.body;
+        const { category, name, numberOfParticipants, description, locationId, enrollStartDate, enrollEndDate, startDate, endDate } = req.body;
 
         
         const service = new ChampionshipService();
@@ -18,7 +18,7 @@ export class ChampionshipController {
                required: true,
                schema: { $ref: "#/definitions/CreateChampionshipRequest" }
         } */
-        const result = await service.create({name});
+        const result = await service.create({category, name, numberOfParticipants, description, locationId, enrollStartDate: new Date(enrollStartDate), enrollEndDate: new Date(enrollEndDate), startDate: new Date(startDate), endDate: new Date(endDate)});
 
         if(result instanceof Error){
             return res.status(400).json(result.message)

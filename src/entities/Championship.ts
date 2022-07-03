@@ -1,4 +1,4 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, OneToMany } from 'typeorm'
+import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, OneToMany, JoinColumn } from 'typeorm'
 import { User } from './User'
 import { Match } from './Match'
 import { v4 as uuid } from 'uuid'
@@ -33,7 +33,11 @@ export class Championship {
     @Column()
     public endDate: Date;
 
-    @OneToOne(type => Location)
+    @OneToOne(type => Location, {
+        eager: true
+
+    })
+    @JoinColumn({ name : "location_id" })
     public location : Location
 
     @OneToMany(type => Match, matches => matches.championship)

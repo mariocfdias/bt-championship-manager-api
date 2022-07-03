@@ -1,9 +1,19 @@
+import { LocationController } from '../controllers/LocationController';
 import {AppDataSource} from '../database/dataSource'
 import { Championship } from '../entities/Championship'
 import { User } from "../entities/User"
+import { Location } from "../entities/Location"
 
 type CreateChampionshipRequest = {
     name: string;
+    category: string;
+    numberOfParticipants: number; 
+    description: string; 
+    locationId: string;
+    enrollStartDate: Date; 
+    enrollEndDate: Date;
+     startDate: Date;
+     endDate: Date;
 }
 
 type EnrollChampionshipRequest = {
@@ -12,20 +22,34 @@ type EnrollChampionshipRequest = {
 }
 
 export class ChampionshipService {
-    async create({ name } : CreateChampionshipRequest) : Promise<Championship | Error> {
+    async create({ category, name, numberOfParticipants, description, locationId, enrollStartDate, enrollEndDate, startDate, endDate } : CreateChampionshipRequest) : Promise<Championship | Error> {
         
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
+        const LocationRepository = AppDataSource.getRepository(Location)
 
         const isAreadlyChampionship = await ChampionshipRepository.findOneBy({
             name
         })
 
+        const location = await LocationRepository.findOneBy({
+            id: locationId
+        })
+        
+        console.log(location)
+
+
         if(isAreadlyChampionship){
             return new Error('Campeonato ja existe')
         }
 
+        if(!location){
+            return new Error('Local não existe')
+        }
+
+
+
         const championship = ChampionshipRepository.create({
-            name
+            category, name, numberOfParticipants, description, location, enrollStartDate: new Date(enrollStartDate), enrollEndDate: new Date(enrollEndDate), startDate: new Date(startDate), endDate: new Date(endDate)
         })
 
         await ChampionshipRepository.save(championship);
