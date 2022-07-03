@@ -1,6 +1,7 @@
 import { StringifyOptions } from 'querystring';
 import {AppDataSource} from '../database/dataSource'
 import { User } from '../entities/User'
+import bcrypt from 'bcrypt';
 
 type CreateUserRequest = {
     username: string;
@@ -10,6 +11,7 @@ type CreateUserRequest = {
     password: string;
 }
 
+const SALT_ROUNDS = 10;
 const USERNAME_MIN = 3, USERNAME_MAX = 100;
 const PASSWORD_MIN = 8, PASSWORD_MAX = 30;
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -31,7 +33,7 @@ export class UserService {
             invalid = this.handleFieldLimit("A senha", password, PASSWORD_MIN, PASSWORD_MAX);
         }
         if (!invalid && !EMAIL_REGEX.test(email)) {
-            invalid = "Email inválido!"; 
+            invalid = "E-mail inválido!"; 
         }
         if (!invalid && !type) {
             invalid = "Informe o tipo de conta!";
@@ -44,9 +46,10 @@ export class UserService {
         const isAlreadyEmail = await userRepository.findOneBy({email})
         
         if (isAlreadyEmail) {
-            return new Error('Email já está em uso!')
+            return new Error('Esse e-mail já está em uso!');
         }
-
+        
+        password = await bcrypt.hash(password, SALT_ROUNDS);
         const user = userRepository.create({username, password, gender, email, type});
 
 
@@ -56,7 +59,18 @@ export class UserService {
         return user;
 
     }
+    async findByEmail(email: string) {
+        const userRepository = AppDataSource.getRepository(User);
+        return userRepository.findOneBy({email});
+    }
 
+    async findByID(id: string) {
+        const userRepository = AppDataSource.getRepository(User);
+        return userRepository.findOneBy({id});
+    }
+    async isPasswordCorrect(password: string, encryptedCorrectPassword: string) {
+        return await bcrypt.compare(password, encryptedCorrectPassword);
+    }
     async getAll() {
         const userRepository = AppDataSource.getRepository(User);
 

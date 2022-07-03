@@ -4,22 +4,20 @@ import {UserService} from '../services/UserService'
 
 export class AuthController {
     async signIn(req : Request, res: Response){
-        return this.register(req, res);
-
-         /* 	
-         #swagger.tags = ['Auth']
-         #swagger.description = 'Rota para login' 
-         */
-
-
-
-
-        console.log(req.body)
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
         const service = new UserService();
 
        // const result = await service.create({username, password});
+        const user = await service.findByEmail(email);
+
+        if (user == null) {
+            return res.status(401).json({message: "Não existe conta com este e-mail.", success: false});
+        }
+        const isCorrect = await service.isPasswordCorrect(password, user.password);
+        if (!isCorrect) {
+            return res.status(401).json({message: "Senha incorreta!", success: false});
+        }
         /* #swagger.parameters['Login'] = {
                in: 'body',
                description: 'Informações do login.',
@@ -37,6 +35,7 @@ export class AuthController {
                description: 'Rota de login.' 
         } */
         //return res.status(200).json(result)
+        return res.status(200).json({message: "Usuário " + user.username + " logado com sucesso!", success: true});
     }
 
     async register(req : Request, res: Response){

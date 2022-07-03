@@ -5,7 +5,7 @@
     "title": "Beach Tennis API",
     "description": "Documentação do projeto de gerenciamento de campeonatos de Beach Tennis."
   },
-  "host": "localhost:3000",
+  "host": "localhost:8080",
   "basePath": "/",
   "tags": [
     {
