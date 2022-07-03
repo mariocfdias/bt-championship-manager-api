@@ -12,7 +12,7 @@ export class User1654043222004 implements MigrationInterface {
                         type: 'integer',
                         isPrimary: true,
                         isGenerated: true,
-                        generationStrategy: 'increment' // thought this was the default
+                        generationStrategy: 'increment'
                     },
                     {
                         name: 'username',

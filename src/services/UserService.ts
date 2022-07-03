@@ -58,7 +58,20 @@ export class UserService {
 
     }
 
+    async findByEmail(email: string) {
+        const userRepository = AppDataSource.getRepository(User);
+        return userRepository.findOneBy({email});
+    }
+
+    async findByID(id: number) {
+        const userRepository = AppDataSource.getRepository(User);
+        return userRepository.findOneBy({id});
+    }
+    async isPasswordCorrect(password: string, encryptedCorrectPassword: string) {
+        return await bcrypt.compare(password, encryptedCorrectPassword);
+    }
     async getAll() {
+
         const userRepository = AppDataSource.getRepository(User);
 
         const users = userRepository.find();
