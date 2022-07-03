@@ -17,10 +17,16 @@ export class Match {
     @OneToOne(() => User, user => user.id)
     public secondParticipant: User
 
+    @Column()
+    public firstParticipantPoints : number;
+
+    @Column()
+    public secondParticipantPoints : number;
+    
     @ManyToOne(type => Championship, championship => championship.matches)
     public championship : Championship
 
-    
+
 
 
     constructor(){

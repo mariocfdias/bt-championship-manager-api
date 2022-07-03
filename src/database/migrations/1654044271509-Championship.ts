@@ -20,37 +20,47 @@ export class Championship1654044271509 implements MigrationInterface {
                     {
                         name: 'category',
                         type: 'varchar',
-                        isUnique: true
+                        isUnique: false
                     },
                     {
                         name: 'numberOfParticipants',
                         type: 'number',
-                        isUnique: true
+                        isUnique: false
                     },
                     {
                         name: 'description',
                         type: 'varchar',
+                        isUnique: false
+
                     },
                     {
                         name: 'enrollStartDate',
                         type: 'datetime',
-                        isUnique: true
+                        isUnique: false
                     },
                     {
                         name: 'enrollEndDate',
                         type: 'datetime',
+                        isUnique: false
+
                     },
                     {
                         name: 'startDate',
                         type: 'datetime',
+                        isUnique: false
+
                     },
                     {
                         name: 'endDate',
                         type: 'datetime',
+                        isUnique: false
+
                     },
                     {
                         name: 'location_id',
-                        type: 'uuid'
+                        type: 'uuid',
+                        isUnique: false
+
                     }
                 ],
                 foreignKeys: [

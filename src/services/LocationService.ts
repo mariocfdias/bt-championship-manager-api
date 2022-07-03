@@ -2,7 +2,7 @@ import {AppDataSource} from '../database/dataSource'
 import { Location } from '../entities/Location'
 
 type CreateLocationRequest = {
-    cep: String;
+    cep: string;
     number: String;
     address: String;
     name: String;
