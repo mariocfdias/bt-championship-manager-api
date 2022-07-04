@@ -131,9 +131,24 @@ export class ChampionshipController {
         // #swagger.responses[400] = { description: 'Existe um erro na validação dos campos' }
                 // #swagger.responses[401] = { description: 'Usuario não autenticado' }
 
-         const {  } = req.body;
+        const { id } = req.query;
+
+        const { description, endDate, startDate, enrollEndDate, enrollStartDate, locationId   } = req.body
+
+        if(!id){
+            return new Error("ID Invalido")
+        }
 
         const service = new ChampionshipService();
+
+        const championship = await service.update(id, {description, endDate: new Date(endDate), startDate: new Date(startDate), enrollEndDate: new Date(enrollEndDate), enrollStartDate: new Date(enrollStartDate), locationId});
+
+        if(!championship) return new Error("Campeonato não encontrado")
+
+
+        
+
+
 
         const result = await service.delete(id);
 

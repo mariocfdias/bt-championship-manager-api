@@ -130,6 +130,39 @@ export class ChampionshipService {
     }
 
 
+    async update(id : string, championship: CreateChampionshipRequest) {
+
+        const ChampionshipRepository = AppDataSource.getRepository(Championship);
+        const LocationRepository = AppDataSource.getRepository(Location);
+
+        const updatedLocation = await LocationRepository.findOneBy({
+            id: championship.locationId
+        })
+
+        const updatedChampionship = await ChampionshipRepository.findOneBy({
+            id
+        })
+        
+
+        if(!updatedChampionship){
+            return Error('Esse campeonato não existe')
+        }
+
+        if(!updatedLocation){
+            return Error('Esse local não existe')
+        }
+
+        updatedChampionship.description = championship.description;
+        updatedChampionship.endDate = championship.endDate;
+        updatedChampionship.startDate = championship.startDate;
+        updatedChampionship.enrollEndDate = championship.enrollEndDate;
+        updatedChampionship.enrollStartDate = championship.enrollStartDate;
+        updatedChampionship.location = updatedLocation;
+
+        await ChampionshipRepository.save(updatedChampionship);
+
+    }
+
     async delete(id : string) {
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
 
@@ -145,7 +178,6 @@ export class ChampionshipService {
         console.log(existsChampionship)
 
 
-        const deletedChampionship = ChampionshipRepository.delete(existsChampionship);
 
         return existsChampionship;
 
