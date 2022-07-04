@@ -161,6 +161,8 @@ export class ChampionshipService {
 
         await ChampionshipRepository.save(updatedChampionship);
 
+        return updatedChampionship
+
     }
 
     async delete(id : string) {

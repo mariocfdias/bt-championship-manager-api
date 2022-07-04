@@ -145,7 +145,7 @@ export class ChampionshipController {
 
         if(!championship) return new Error("Campeonato não encontrado")
 
-        return res.status(204).json(championship)
+        return res.status(200).json(championship)
     }
 
 
