@@ -130,7 +130,7 @@ export class ChampionshipService {
     }
 
 
-    async update({id ,description,endDate, startDate, enrollEndDate, enrollStartDate, locationId} : any) {
+    async update({id,name ,description,endDate, startDate, enrollEndDate, enrollStartDate, locationId} : any) {
 
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
         const LocationRepository = AppDataSource.getRepository(Location);
@@ -151,7 +151,7 @@ export class ChampionshipService {
         if(!updatedLocation){
             return Error('Esse local não existe')
         }
-
+        if(name) updatedChampionship.name = name
         if(description) updatedChampionship.description = description;
         if(endDate) updatedChampionship.endDate = endDate;
         if(startDate) updatedChampionship.startDate = startDate;

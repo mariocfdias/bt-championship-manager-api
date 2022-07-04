@@ -133,7 +133,7 @@ export class ChampionshipController {
 
         const { id } = req.query;
 
-        const { description, endDate, startDate, enrollEndDate, enrollStartDate, locationId   } = req.body
+        const { description, endDate, startDate, enrollEndDate, enrollStartDate, locationId, name   } = req.body
 
         if(!id){
             return new Error("ID Invalido")
