@@ -76,12 +76,23 @@ export class ChampionshipController {
                description: 'Listagem de campeonatos.' 
         } */
 
+
+        const { id } = req.query
+
         const service = new ChampionshipService();
+
+        if(id){
+            const result = await service.getById(id);
+
+            return res.json(result)
+        }
 
         const result = await service.getAll();
 
         return res.json(result)
     }
+
+
 
     async delete(req : Request, res: Response){
         /* 	
@@ -89,7 +100,8 @@ export class ChampionshipController {
          #swagger.description = 'Rota para a exclusão de campeonatos'
         */
         
-        const { id } = req.params
+         console.log(req.query)
+        const { id } = req.query
 
         const service = new ChampionshipService();
 
@@ -119,7 +131,7 @@ export class ChampionshipController {
         // #swagger.responses[400] = { description: 'Existe um erro na validação dos campos' }
                 // #swagger.responses[401] = { description: 'Usuario não autenticado' }
 
-         const { category, name, numberOfParticipants, description, enrollStartDate, enrollEndDate, startDate, endDate } = req.body;
+         const {  } = req.body;
 
         const service = new ChampionshipService();
 

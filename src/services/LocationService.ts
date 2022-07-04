@@ -54,12 +54,14 @@ export class LocationService {
             id
         })
 
+        console.log(existsLocation)
+
         if(!existsLocation){
             return Error('Essa localização não existe')
         }
 
 
-        const deletedLocation = LocationRepository.delete(id);
+        const deletedLocation = LocationRepository.delete(existsLocation);
 
         return deletedLocation;
 

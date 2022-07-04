@@ -10,7 +10,7 @@ const routes = Router()
 routes.post("/locations", new LocationController().create)
 routes.get("/locations", new LocationController().getAll)
 routes.delete("/locations", new LocationController().delete)
-routes.patch("/locations/:id", new LocationController().update)
+routes.patch("/locations/", new LocationController().update)
 
 
 routes.post("/users", new UserController().create)
@@ -23,6 +23,8 @@ routes.patch("/users/:id", new UserController().update)
 
 routes.post("/championships", new ChampionshipController().create)
 routes.patch("/championships/:id", new ChampionshipController().update)
+routes.delete("/championships", new ChampionshipController().delete)
+
 
 routes.post("/enrollChampionship", new ChampionshipController().enroll)
 routes.get("/championships", new ChampionshipController().getAll)

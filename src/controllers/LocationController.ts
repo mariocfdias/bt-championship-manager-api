@@ -57,9 +57,11 @@ export class LocationController {
          #swagger.tags = ['Locations']
          #swagger.description = 'Endpoint para a exclusão de localizações' */
         
-        const { id } = req.params
+        const { id } = req.query
 
         const service = new LocationService();
+
+        const location = service.g
 
         const result = await service.delete(id);
 

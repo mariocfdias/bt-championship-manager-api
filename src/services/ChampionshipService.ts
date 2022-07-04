@@ -111,6 +111,24 @@ export class ChampionshipService {
 
     }
 
+    async getById(id : string) {
+        const ChampionshipRepository = AppDataSource.getRepository(Championship);
+
+        const championship = ChampionshipRepository.find({
+            where: {
+                id
+            },
+            relations: ["participants"]
+        });
+
+        if(!championship){
+            return Error('Esse campeonato não existe')
+        }
+
+        return championship;
+
+    }
+
 
     async delete(id : string) {
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
@@ -124,8 +142,10 @@ export class ChampionshipService {
             return Error('Esse campeonato não existe')
         }
 
+        console.log(existsChampionship)
 
-        const deletedChampionship = ChampionshipRepository.delete(id);
+
+        const deletedChampionship = ChampionshipRepository.delete(existsChampionship);
 
         return existsChampionship;
 
