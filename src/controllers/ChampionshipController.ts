@@ -18,7 +18,7 @@ export class ChampionshipController {
                required: true,
                schema: { $ref: "#/definitions/CreateChampionshipRequest" }
         } */
-        const result = await service.create({name});
+        const result = await service.create({category, name, numberOfParticipants, description, enrollStartDate, enrollEndDate, startDate, endDate});
 
         if(result instanceof Error){
             return res.status(400).json(result.message)

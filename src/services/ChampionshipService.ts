@@ -12,8 +12,8 @@ type CreateChampionshipRequest = {
     locationId: string;
     enrollStartDate: Date; 
     enrollEndDate: Date;
-     startDate: Date;
-     endDate: Date;
+    startDate: Date;
+    endDate: Date;
 }
 
 type EnrollChampionshipRequest = {
@@ -24,6 +24,7 @@ type EnrollChampionshipRequest = {
 export class ChampionshipService {
     async create({ category, name, numberOfParticipants, description, locationId, enrollStartDate, enrollEndDate, startDate, endDate } : CreateChampionshipRequest) : Promise<Championship | Error> {
         
+        console.log(new Date(enrollStartDate))
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
         const LocationRepository = AppDataSource.getRepository(Location)
 
@@ -45,7 +46,6 @@ export class ChampionshipService {
         if(!location){
             return new Error('Local não existe')
         }
-
 
 
         const championship = ChampionshipRepository.create({
