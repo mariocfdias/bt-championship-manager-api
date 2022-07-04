@@ -22,6 +22,10 @@ export class Match1654044290809 implements MigrationInterface {
                         type: 'uuid'                    
                     },
                     {
+                        name: 'second_participant_id',
+                        type: 'uuid'                    
+                    },
+                    {
                         name: 'firstParticipantPoints',
                         type: 'number'                    
                     },
