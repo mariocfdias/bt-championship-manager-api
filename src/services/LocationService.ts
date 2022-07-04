@@ -3,9 +3,9 @@ import { Location } from '../entities/Location'
 
 type CreateLocationRequest = {
     cep: string;
-    number: String;
-    address: String;
-    name: String;
+    number: string;
+    address: string;
+    name: string;
     numberOfCourts: number;
 }
 
@@ -34,6 +34,29 @@ export class LocationService {
 
         return location;
 
+    }
+
+    async update({id, cep, number, address, numberOfCourts, name} : any) : Promise<Location | Error> {
+        
+        const LocationRepository = AppDataSource.getRepository(Location);
+
+        const editedLocation = await LocationRepository.findOneBy({
+            id
+        })
+
+        if(!editedLocation){
+            return new Error('Localização não existe')
+        }
+
+        if(address) editedLocation.address = address
+        if(cep) editedLocation.cep = cep
+        if(name) editedLocation.name = name
+        if(number) editedLocation.number = number
+        if(numberOfCourts) editedLocation.numberOfCourts = numberOfCourts
+
+        await LocationRepository.save(editedLocation);
+
+        return editedLocation
     }
 
     async getAll() {

@@ -78,11 +78,13 @@ export class LocationController {
          #swagger.tags = ['Locations']
          #swagger.description = 'Rota para a edição de localizações' */
         
-        const { id } = req.params
+        const { id } = req.query
+        
+        const { cep, number, address, name, numberOfCourts} = req.body;
 
         const service = new LocationService();
 
-        const result = await service.delete(id);
+        const result = await service.update({cep, number, address, numberOfCourts, name, id});
         /* #swagger.parameters['Editar localização'] = {
                in: 'body',
                description: 'Editar uma localização.',

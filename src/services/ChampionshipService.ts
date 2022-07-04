@@ -130,13 +130,13 @@ export class ChampionshipService {
     }
 
 
-    async update(id : string, championship: CreateChampionshipRequest) {
+    async update({id ,description,endDate, startDate, enrollEndDate, enrollStartDate, locationId} : any) {
 
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
         const LocationRepository = AppDataSource.getRepository(Location);
 
         const updatedLocation = await LocationRepository.findOneBy({
-            id: championship.locationId
+            id: locationId
         })
 
         const updatedChampionship = await ChampionshipRepository.findOneBy({
@@ -152,12 +152,12 @@ export class ChampionshipService {
             return Error('Esse local não existe')
         }
 
-        updatedChampionship.description = championship.description;
-        updatedChampionship.endDate = championship.endDate;
-        updatedChampionship.startDate = championship.startDate;
-        updatedChampionship.enrollEndDate = championship.enrollEndDate;
-        updatedChampionship.enrollStartDate = championship.enrollStartDate;
-        updatedChampionship.location = updatedLocation;
+        if(description) updatedChampionship.description = description;
+        if(endDate) updatedChampionship.endDate = endDate;
+        if(startDate) updatedChampionship.startDate = startDate;
+        if(enrollEndDate) updatedChampionship.enrollEndDate = enrollEndDate;
+        if(enrollStartDate) updatedChampionship.enrollStartDate = enrollStartDate;
+        if(updatedLocation) updatedChampionship.location = updatedLocation;
 
         await ChampionshipRepository.save(updatedChampionship);
 
