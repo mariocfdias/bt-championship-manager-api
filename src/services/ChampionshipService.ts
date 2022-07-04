@@ -175,11 +175,14 @@ export class ChampionshipService {
             return Error('Esse campeonato não existe')
         }
 
+        const deletedChampionship = ChampionshipRepository.delete(existsChampionship);
+
+
         console.log(existsChampionship)
 
 
 
-        return existsChampionship;
+        return deletedChampionship;
 
     }
 }

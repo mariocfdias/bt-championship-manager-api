@@ -145,14 +145,7 @@ export class ChampionshipController {
 
         if(!championship) return new Error("Campeonato não encontrado")
 
-
-        
-
-
-
-        const result = await service.delete(id);
-
-        return res.status(204).json(result)
+        return res.status(204).json(championship)
     }
 
 

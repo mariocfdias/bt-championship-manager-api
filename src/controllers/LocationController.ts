@@ -61,8 +61,6 @@ export class LocationController {
 
         const service = new LocationService();
 
-        const location = service.g
-
         const result = await service.delete(id);
 
         // #swagger.responses[204] = { description: 'Local deletado com sucesso' }
