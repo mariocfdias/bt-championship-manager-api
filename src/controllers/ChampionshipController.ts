@@ -141,7 +141,7 @@ export class ChampionshipController {
 
         const service = new ChampionshipService();
 
-        const championship = await service.update({id ,description, endDate: new Date(endDate), startDate: new Date(startDate), enrollEndDate: new Date(enrollEndDate), enrollStartDate: new Date(enrollStartDate), locationId});
+        const championship = await service.update({name,id ,description, endDate: new Date(endDate), startDate: new Date(startDate), enrollEndDate: new Date(enrollEndDate), enrollStartDate: new Date(enrollStartDate), locationId});
 
         if(!championship) return new Error("Campeonato não encontrado")
 
