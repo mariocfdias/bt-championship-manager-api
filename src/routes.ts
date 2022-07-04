@@ -22,7 +22,7 @@ routes.patch("/users/:id", new UserController().update)
 
 
 routes.post("/championships", new ChampionshipController().create)
-routes.patch("/championships/:id", new ChampionshipController().update)
+routes.patch("/championships", new ChampionshipController().update)
 routes.delete("/championships", new ChampionshipController().delete)
 
 
