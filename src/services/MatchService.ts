@@ -41,12 +41,6 @@ export class MatchService {
           //championship.matches.push(savedMatch)
 
           console.log({newMatch})
-          
-
-
-
-        
-
     }
 
     async getAll(){
@@ -57,8 +51,28 @@ export class MatchService {
         return matches;
     }
 
-    async update() {
-        
+    async update({id, firstParticipantPoints, secondParticipantPoints} : any) {
+        const MatchRepository = AppDataSource.getRepository(Match);
+
+        const match = await MatchRepository.findOne({
+            where: {
+                id: id
+            }
+        })
+
+
+        if(!match) return Error("Partida não enconrada")
+
+        match.firstParticipantPoints = firstParticipantPoints
+        match.secondParticipantPoints = secondParticipantPoints
+
+
+        console.log({match})
+
+        const updatedRepository = await MatchRepository.save(match)
+
+        return updatedRepository
+
     }
 
 

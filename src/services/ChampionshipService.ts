@@ -172,7 +172,7 @@ export class ChampionshipService {
             where: {
                 id
             },
-            relations: ["participants"]
+            relations: ["participants", "matches"]
         });
 
         if(!championship){

@@ -17,14 +17,15 @@ export class MatchController {
                schema: { $ref: "#/definitions/UpdateMatchRequest" }
         } */
         console.log(req.body)
-        const { userId, championshipId } = req.body;
+        const {id} = req.query
+        const { firstParticipantPoints, secondParticipantPoints } = req.body;
          // #swagger.responses[204] = { description: 'Partida consolidada com sucesso' }
          // #swagger.responses[404] = { description: 'Partida não existente' }
         // #swagger.responses[401] = { description: 'Usuario não autenticado' }
 
-        const service = new ChampionshipService();
+        const service = new MatchService();
 
-        const result = await service.enroll({userId, championshipId});
+        const result = await service.update({id, firstParticipantPoints, secondParticipantPoints});
 
         if(result instanceof Error){
             return res.status(404).json(result.message)

@@ -16,7 +16,6 @@ routes.post("/auth/register", new AuthController().register)
 routes.get("/locations", new LocationController().getAll)
 routes.get("/championships", new ChampionshipController().getAll)
 
-routes.use(authAdmin)
 // Rotas que precisam de permissão de admin
 routes.post("/users", new UserController().create)
 
@@ -41,7 +40,8 @@ routes.post("/auth/signIn", new AuthController().signIn)
 routes.post("/auth/register", new AuthController().register)
 
 routes.post("/matches", new MatchController().create)
-routes.patch("/matches/consolidate/", new MatchController().consolidate)
+routes.patch("/matches", new MatchController().consolidate)
 routes.get("/matches", new MatchController().getAll)
+
 
 export { routes }
