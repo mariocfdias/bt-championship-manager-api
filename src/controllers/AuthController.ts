@@ -13,11 +13,11 @@ export class AuthController {
         const user = await service.findByEmail(email);
 
         if (user == null) {
-            return res.status(401).json({message: "Não existe conta com este e-mail.", success: false});
+            return res.status(401).json({message: "Não existe conta com este e-mail."});
         }
         const isCorrect = await service.isPasswordCorrect(password, user.password);
         if (!isCorrect) {
-            return res.status(401).json({message: "Senha incorreta!", success: false});
+            return res.status(401).json({message: "Senha incorreta!"});
         }
         const info = {
             id: user.id,
@@ -44,6 +44,7 @@ export class AuthController {
         return res.status(200).json({
             message: "Usuário " + user.username + " logado com sucesso!",
             info,
+            type : user.type,
             token
         });
     }
@@ -73,8 +74,8 @@ export class AuthController {
         // #swagger.responses[400] = { description: 'Existem erros de validação' }
 
         if (result instanceof Error){
-            return res.status(400).json({ message: result.message, success: false})
+            return res.status(400).json({ message: result.message})
         }
-        return res.status(201).json({ message: 'Usuário cadastrado.', success: true});
+        return res.status(201).json({ message: 'Usuário cadastrado.'});
     }
 }
