@@ -26,16 +26,22 @@ routes.patch("/locations/", new LocationController().update)
 	    
 routes.get("/users", new UserController().getAll)
 routes.post("/users", new UserController().create)
-routes.delete("/users/:id", new UserController().delete)
-routes.patch("/users/:id", new UserController().update)
+routes.delete("/users", new UserController().delete)
+routes.patch("/users", new UserController().update)
 
 routes.post("/championships", new ChampionshipController().create)
 routes.patch("/championships", new ChampionshipController().update)
 routes.delete("/championships", new ChampionshipController().delete)
 
 routes.post("/enrollChampionship", new ChampionshipController().enroll)
-routes.delete("/championships/:id", new ChampionshipController().delete)
+routes.delete("/championships", new ChampionshipController().delete)
 
-routes.patch("/match/consolidate/:id", new MatchController().consolidate)
+routes.patch("/match/consolidate", new MatchController().consolidate)
+routes.post("/auth/signIn", new AuthController().signIn)
+routes.post("/auth/register", new AuthController().register)
+
+routes.post("/matches", new MatchController().create)
+routes.patch("/matches/consolidate/", new MatchController().consolidate)
+routes.get("/matches", new MatchController().getAll)
 
 export { routes }

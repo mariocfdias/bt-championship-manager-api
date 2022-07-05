@@ -1,5 +1,6 @@
 import {Request, Response} from 'express'
 import { ChampionshipService } from '../services/ChampionshipService'
+import { MatchService } from '../services/MatchService';
 
 export class MatchController {
     
@@ -38,9 +39,26 @@ export class MatchController {
          #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
         */
 
-        const service = new ChampionshipService();
+        const service = new MatchService();
 
         const result = await service.getAll();
+
+        console.log(result)
+        return res.json(result)
+    }
+
+    async create(req : Request, res: Response){
+        /* 	
+         #swagger.tags = ['Championships']
+         #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
+        */
+
+        const service = new MatchService();
+
+        const { championshipId } = req.query
+        const { firstParticipantId, secondParticipantId, name, group, number } = req.body
+
+        const result = await service.create({championshipId, firstParticipantId, secondParticipantId, name, group, number});
 
         return res.json(result)
     }
