@@ -1,8 +1,8 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, OneToMany, JoinColumn } from 'typeorm'
-import { User } from './User'
+import { Entity, Column, PrimaryColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, OneToMany, JoinColumn } from 'typeorm'
 import { Match } from './Match'
 import { v4 as uuid } from 'uuid'
 import { Location } from './Location';
+import { Participant } from './Participant';
 
 @Entity('championships')
 export class Championship {
@@ -35,7 +35,6 @@ export class Championship {
 
     @OneToOne(type => Location, {
         eager: true
-
     })
     @JoinColumn({ name : "location_id" })
     public location : Location
@@ -43,7 +42,7 @@ export class Championship {
     @OneToMany(type => Match, matches => matches.championship)
     public matches : Match[]
 
-    @ManyToMany(type => User, user => user.championships)
+    @ManyToMany(type => Participant, participant => participant.championships)
     @JoinTable({
        name: "championships_participants_users",
        joinColumn: {
@@ -55,7 +54,7 @@ export class Championship {
         referencedColumnName: "id"
     }
     })
-    public participants: User[];
+    public participants: Participant[];
 
     
 

@@ -17,6 +17,7 @@ routes.post("/users", new UserController().create)
 
 	    
 routes.get("/users", new UserController().getAll)
+routes.post("/users", new UserController().create)
 routes.delete("/users/:id", new UserController().delete)
 routes.patch("/users/:id", new UserController().update)
 
