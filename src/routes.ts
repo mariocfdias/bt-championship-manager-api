@@ -8,6 +8,8 @@ import { auth } from "./middleware/auth"
 import { authAdmin } from "./middleware/authAdmin"
 
 const routes = Router()
+
+
 // Rotas que não precisam de permissão de admin
 routes.post("/auth/signIn", new AuthController().signIn)
 routes.post("/auth/register", new AuthController().register)

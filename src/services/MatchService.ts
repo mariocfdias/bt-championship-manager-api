@@ -51,6 +51,18 @@ export class MatchService {
         return matches;
     }
 
+    async getById({id}){
+        const matchRepository = AppDataSource.getRepository(Match);
+
+        const match = matchRepository.findOne({
+            where: {
+                id: id
+            }
+        });
+
+        return match;
+    }
+
     async update({id, firstParticipantPoints, secondParticipantPoints} : any) {
         const MatchRepository = AppDataSource.getRepository(Match);
 

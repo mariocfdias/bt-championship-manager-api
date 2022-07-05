@@ -40,9 +40,30 @@ export class MatchController {
          #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
         */
 
+        const { id } = req.query
+
         const service = new MatchService();
 
+        if(id) {
+            const result = await service.getById({id});
+            return res.json(result)
+
+        }
         const result = await service.getAll();
+        
+        return res.json(result)
+
+        console.log(result)
+    }
+
+    async getAll(req : Request, res: Response){
+        /* 	
+         #swagger.tags = ['Championships']
+         #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
+        */
+
+        const service = new MatchService();
+
 
         console.log(result)
         return res.json(result)
