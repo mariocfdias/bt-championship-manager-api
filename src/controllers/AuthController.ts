@@ -1,6 +1,7 @@
 import {Request, Response} from 'express'
 import { ChampionshipService } from '../services/ChampionshipService'
 import {UserService} from '../services/UserService'
+const jwt = require('jsonwebtoken');
 
 export class AuthController {
     async signIn(req : Request, res: Response){
@@ -18,6 +19,11 @@ export class AuthController {
         if (!isCorrect) {
             return res.status(401).json({message: "Senha incorreta!", success: false});
         }
+        const info = {
+            id: user.id,
+            type: user.type
+        };
+        const token = jwt.sign(info, process.env.JWT_KEY, { expiresIn: '1h' });
         /* #swagger.parameters['Login'] = {
                in: 'body',
                description: 'Informações do login.',
@@ -35,7 +41,11 @@ export class AuthController {
                description: 'Rota de login.' 
         } */
         //return res.status(200).json(result)
-        return res.status(200).json({message: "Usuário " + user.username + " logado com sucesso!", success: true});
+        return res.status(200).json({
+            message: "Usuário " + user.username + " logado com sucesso!",
+            info,
+            token
+        });
     }
 
     async register(req : Request, res: Response){

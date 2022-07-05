@@ -59,6 +59,7 @@ export class UserService {
         return user;
 
     }
+
     async findByEmail(email: string) {
         const userRepository = AppDataSource.getRepository(User);
         return userRepository.findOneBy({email});
@@ -68,9 +69,11 @@ export class UserService {
         const userRepository = AppDataSource.getRepository(User);
         return userRepository.findOneBy({id});
     }
+
     async isPasswordCorrect(password: string, encryptedCorrectPassword: string) {
         return await bcrypt.compare(password, encryptedCorrectPassword);
     }
+
     async getAll() {
         const userRepository = AppDataSource.getRepository(User);
 
