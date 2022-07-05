@@ -33,7 +33,14 @@ export class Match1654044290809 implements MigrationInterface {
                         name: 'secondParticipantPoints',
                         type: 'number'                    
                     },
-                    
+                    {
+                        name: 'number',
+                        type: 'number'                    
+                    },
+                    {
+                        name: 'group',
+                        type: 'varchar'                    
+                    },
                     {
                         name: 'championship_id',
                         type: 'uuid'
@@ -43,7 +50,7 @@ export class Match1654044290809 implements MigrationInterface {
                 foreignKeys: [
                     {
                       name: "firstParticipant",
-                      referencedTableName: "users",
+                      referencedTableName: "participants",
                       referencedColumnNames: ["id"],
                       columnNames: ["first_participant_id"],
                       onDelete: "CASCADE",
@@ -51,7 +58,7 @@ export class Match1654044290809 implements MigrationInterface {
                     },
                     {
                         name: "secondParticipant",
-                        referencedTableName: "users",
+                        referencedTableName: "participants",
                         referencedColumnNames: ["id"],
                         columnNames: ["second_participant_id"],
                         onDelete: "CASCADE",

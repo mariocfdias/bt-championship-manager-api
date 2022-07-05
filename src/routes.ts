@@ -34,6 +34,8 @@ routes.delete("/championships/:id", new ChampionshipController().delete)
 routes.post("/auth/signIn", new AuthController().signIn)
 routes.post("/auth/register", new AuthController().register)
 
-routes.patch("/match/consolidate/:id", new MatchController().consolidate)
+routes.post("/matches", new MatchController().create)
+routes.patch("/matches/consolidate/", new MatchController().consolidate)
+routes.get("/matches", new MatchController().getAll)
 
 export { routes }

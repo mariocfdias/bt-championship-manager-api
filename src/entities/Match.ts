@@ -1,29 +1,43 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn, OneToOne, ManyToOne } from 'typeorm'
+import { Entity, Column, CreateDateColumn, PrimaryColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 import { Championship } from './Championship';
+import { Participant } from './Participant';
 import { User } from './User';
 
 @Entity('matches')
 export class Match {
     @PrimaryColumn()
     public id: string;
-
+ 
     @Column()
     public name: string;
 
-    @OneToOne(() => User, user => user.id)
+    @OneToOne(() => Participant, user => user.id, {
+        eager: true
+    })
+    @JoinColumn({ name : "first_participant_id" })
     public firstParticipant : User
 
-    @OneToOne(() => User, user => user.id)
+    @OneToOne(() => Participant, user => user.id, {
+        eager: true
+    })
+    @JoinColumn({ name : "second_participant_id" })
     public secondParticipant: User
 
     @Column()
     public firstParticipantPoints : number;
 
     @Column()
-    public secondParticipantPoints : number;
+    public secondParticipantPoints : number;  
+
+    @Column()
+    public group : string;
     
+    @Column()
+    public number: number;
+
     @ManyToOne(type => Championship, championship => championship.matches)
+    @JoinColumn({ name : "championship_id" })
     public championship : Championship
 
 
