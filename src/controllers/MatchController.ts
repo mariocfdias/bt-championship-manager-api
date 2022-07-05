@@ -45,29 +45,13 @@ export class MatchController {
         const service = new MatchService();
 
         if(id) {
-            const result = await service.getById({id});
-            return res.json(result)
-
+            return res.json(await service.getById({id}))
         }
-        const result = await service.getAll();
         
-        return res.json(result)
+        return res.json(await service.getAll())
 
-        console.log(result)
     }
 
-    async getAll(req : Request, res: Response){
-        /* 	
-         #swagger.tags = ['Championships']
-         #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
-        */
-
-        const service = new MatchService();
-
-
-        console.log(result)
-        return res.json(result)
-    }
 
     async create(req : Request, res: Response){
         /* 	
