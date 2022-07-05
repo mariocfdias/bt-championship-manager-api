@@ -3,6 +3,7 @@ import {AppDataSource} from '../database/dataSource'
 import { Championship } from '../entities/Championship'
 import { User } from "../entities/User"
 import { Location } from "../entities/Location"
+import { Participant } from '../entities/Participant';
 
 type CreateChampionshipRequest = {
     name: string;
@@ -58,41 +59,71 @@ export class ChampionshipService {
 
     }
 
-    async enroll({ userId, championshipId } : EnrollChampionshipRequest) : Promise<Championship | Error> {
+    async enroll({ name, email, championshipId } : any) : Promise<Championship | Error> {
         
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
-        const UserRepository = AppDataSource.getRepository(User);
-
-        const championshipList = await ChampionshipRepository.find(
-            {
-                relations: ["participants"]
-            } );
+        const ParticipantRepository = AppDataSource.getRepository(Participant);
+        const UserRepository = AppDataSource.getRepository(User)
+  
             const championship = await ChampionshipRepository.findOne({
                 where: {
-                id: championshipId
+                    id: championshipId
             },
             relations: ["participants"]
 
         })
-            const user = await UserRepository.findOneBy({
-                id: userId
-            })
+
+        
+        console.log({championship})
+
+
+        if(!championship) return new Error('Campeonato não encontrado')
+        
+    
+
+            const associatedUser = await UserRepository.findOne({
+                where: {
+                    email
+                }
+            }) 
+
+            const newParticipant = ParticipantRepository.create({name, email})
+            if(associatedUser) newParticipant.user = associatedUser
+
+            console.log(associatedUser)
+            ParticipantRepository.save(newParticipant)
+            newParticipant.championships = []
+
+            //console.log({newParticipant})
+
+
+            //newParticipant.championships.push(championship);
+
+
+
+            championship?.participants.push(newParticipant)
+
+            const user = await ParticipantRepository.find({
+                where: {
+                    email
+                },
+                relations: ["championships"]
+            },
+            )
 
             
             if(!championship || !user){
                 return new Error('Campeonato ou usuario inexistente')
             }
-            console.log(championship)
-            championship.participants.push(user)
+            //championship.participants.push(user)
 
-            await ChampionshipRepository.save(championship)
+            console.log({championship})
+           // await ChampionshipRepository.save(championship)
 
-        console.log({championship})
-        console.log("aqui")
 
        
 
-        //await ChampionshipRepository.save(championship);
+        await ChampionshipRepository.save(championship);
 
         //return championship;
         return new Error('teste')

@@ -25,6 +25,7 @@ routes.delete("/locations", new LocationController().delete)
 routes.patch("/locations/", new LocationController().update)
 	    
 routes.get("/users", new UserController().getAll)
+routes.post("/users", new UserController().create)
 routes.delete("/users/:id", new UserController().delete)
 routes.patch("/users/:id", new UserController().update)
 

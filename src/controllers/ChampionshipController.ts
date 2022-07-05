@@ -38,7 +38,7 @@ export class ChampionshipController {
          #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
         */
         console.log(req.body)
-        const { userId, championshipId } = req.body;
+        const { name, email,championshipId } = req.body;
 
         const service = new ChampionshipService();
 /* #swagger.parameters['Inscrever em campeonato'] = {
@@ -56,7 +56,7 @@ export class ChampionshipController {
 
         
 
-        const result = await service.enroll({userId, championshipId});
+        const result = await service.enroll({name, email, championshipId});
 
         if(result instanceof Error){
             return res.status(400).json(result.message)

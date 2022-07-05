@@ -26,7 +26,7 @@ export class ChampionshipParticipants1654045116290 implements MigrationInterface
                 {
                     columnNames: ['participantId'],
                     referencedColumnNames: ['id'],
-                    referencedTableName: 'users',
+                    referencedTableName: 'participants',
                 },
             ],
         }))
