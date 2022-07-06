@@ -19,6 +19,7 @@ routes.get("/locations", new LocationController().getAll)
 routes.get("/championships", new ChampionshipController().getAll)
 
 // Rotas que precisam de permissão de admin
+routes.use(authAdmin);
 routes.post("/users", new UserController().create)
 
 routes.post("/locations", new LocationController().create)
