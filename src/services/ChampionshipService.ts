@@ -77,7 +77,7 @@ export class ChampionshipService {
         
         
         console.log({championship})
-
+        
 
         if(!championship) return new Error('Campeonato não encontrado')
         if(championship.numberOfParticipants <= championship.participants.length) {
@@ -141,7 +141,7 @@ export class ChampionshipService {
 
             await ChampionshipRepository.save(championship);
             
-            //return championship;
+            return championship;
             
         }
         

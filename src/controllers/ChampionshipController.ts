@@ -73,7 +73,8 @@ export class ChampionshipController {
             return res.status(400).json(result.message)
         }
 
-        return res.status(204)
+        console.log("teste")
+        return res.json(result)
     }
 
     async getAll(req : Request, res: Response){
