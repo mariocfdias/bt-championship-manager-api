@@ -99,21 +99,20 @@ export class ChampionshipService {
 
 
 
-            //newParticipant.championships.push(championship);
 
-           const test = await ParticipantRepository.save(newParticipant)
+           championship.participants.push(newParticipant)
+           ParticipantRepository.save(newParticipant)
 
             
-            console.log({test})
 
             //console.log({newParticipant})
 
 
+            //newParticipant.championships.push(championship);
 
 
 
-            championship.participants.push(newParticipant)
-
+            
             const user = await ParticipantRepository.find({
                 where: {
                     email
@@ -121,28 +120,26 @@ export class ChampionshipService {
                 relations: ["championships"]
             },
             )
-            
+
             
             if(!championship || !user){
                 return new Error('Campeonato ou usuario inexistente')
             }
-            
+
             if(championship.numberOfParticipants == championship.participants.length){
                 console.log("Numero de usuarios atigindo, montando partidas")
             }
             //championship.participants.push(user)
-            
+
             console.log({championship})
 
-            await ChampionshipRepository.save(championship)
             
-            if(championship.numberOfParticipants == championship.participants.length && championship.state == "Aberto"){
+            await ChampionshipRepository.save(championship)
+            if(championship.numberOfParticipants == championship.participants.length ){
                 await this.generateMatches({championshipId})
-                
+
             }
             
-
-
             return championship;
             
         }
@@ -185,7 +182,7 @@ export class ChampionshipService {
           if(!championship) return new Error('Campeonato não existe')
 
         const participantList = championship.participants
-        //ChampionshipRepository.save(championship)
+
         participantList.sort((a,b) => a.order - b.order); 
 
         const numberOfGroups = championship.numberOfParticipants / 4;
@@ -237,7 +234,7 @@ export class ChampionshipService {
     async getAll() {
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
 
-        const championships = await ChampionshipRepository.find({
+        const championships = ChampionshipRepository.find({
             relations: ["participants", "matches"],
             order: {
                 participants: {
@@ -248,7 +245,6 @@ export class ChampionshipService {
                 }
             }
         });
-
 
         return championships;
 
