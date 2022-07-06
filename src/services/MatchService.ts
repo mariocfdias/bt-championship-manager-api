@@ -43,6 +43,21 @@ export class MatchService {
           console.log({newMatch})
     }
 
+    async generateMatches({numberOfParticipants, championshipId}){
+        const MatchRepository = AppDataSource.getRepository(Match);
+        const ChampionshipRepository = AppDataSource.getRepository(Championship);
+        const ParticipantRepository = AppDataSource.getRepository(Participant);
+
+
+        const championship = await ChampionshipRepository.findOne({
+            where: {
+                id: championshipId
+        },
+        relations: ["matches", "participants"]
+          })
+
+    }
+
     async getAll(){
         const matchRepository = AppDataSource.getRepository(Match);
 
@@ -77,6 +92,10 @@ export class MatchService {
 
         match.firstParticipantPoints = firstParticipantPoints
         match.secondParticipantPoints = secondParticipantPoints
+
+        if(firstParticipantPoints > secondParticipantPoints) match.firstParticipant.wins += 1
+        if(firstParticipantPoints < secondParticipantPoints) match.secondParticipant.wins += 1
+        
 
 
         console.log({match})

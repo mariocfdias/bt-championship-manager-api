@@ -4,6 +4,8 @@ import { Championship } from '../entities/Championship'
 import { User } from "../entities/User"
 import { Location } from "../entities/Location"
 import { Participant } from '../entities/Participant';
+import { Match } from '../entities/Match';
+import { MatchService } from './MatchService';
 
 type CreateChampionshipRequest = {
     name: string;
@@ -78,7 +80,10 @@ export class ChampionshipService {
 
 
         if(!championship) return new Error('Campeonato não encontrado')
-        if(championship.numberOfParticipants <= championship.participants.length) return new Error("Numero maximo de participantes atingido")
+        if(championship.numberOfParticipants <= championship.participants.length) {
+            await this.generateMatches({championshipId})
+            return new Error("Numero maximo de participantes atingido")
+        }
     
 
             const associatedUser = await UserRepository.findOne({
@@ -87,21 +92,12 @@ export class ChampionshipService {
                 }
             }) 
 
-            const newParticipant = ParticipantRepository.create({name, email})
+            const newParticipant = ParticipantRepository.create({name, email, wins: 0, order: championship.participants.length})
             if(associatedUser) newParticipant.user = associatedUser
 
 
 
 
-            const participant = await ParticipantRepository.find({
-                where: {
-                    email
-            },
-            relations: ["championships"]
-
-        })
-
-        console.log({testeCamp: participant[0]})
 
             const test = await ParticipantRepository.save(newParticipant)
 
@@ -141,15 +137,72 @@ export class ChampionshipService {
 
        
 
-        await ChampionshipRepository.save(championship);
+            await ChampionshipRepository.save(championship);
+            
+            //return championship;
+            return new Error('teste')
+            
+        }
+        
+        
+        async generateMatches({championshipId}){
+            const MatchRepository = AppDataSource.getRepository(Match);
+            const ChampionshipRepository = AppDataSource.getRepository(Championship);
+            const ParticipantRepository = AppDataSource.getRepository(Participant);
+            const matchService = new MatchService()
 
-        //return championship;
-        return new Error('teste')
 
-    }
+        const championship = await ChampionshipRepository.findOne({
+            where: {
+                id: championshipId
+        },
+        relations: ["matches", "participants"]
+          })
+
+          if(!championship) return new Error('Campeonato não existe')
+
+        const participantList = championship.participants
+
+        participantList.sort((a,b) => a.order - b.order); 
+
+        const numberOfGroups = championship.numberOfParticipants / 4;
 
 
-    async generateMatches(){
+        for(let i = 0; i<numberOfGroups; i++){
+            let participantGroup = []
+
+            for(let j = 0; j<4; j++){
+
+                participantGroup.push(participantList[4*i + j])
+            }
+
+            console.log({i})
+
+            let numberOfMatches = 1
+            for(let k = 0; k<4;k++){
+                for(let j = 0; j<4;j++){
+                    if(participantGroup[k] != participantGroup[j]){
+                        console.log({first:participantGroup[k], second: participantGroup[j]})
+                        let firstParticipant = participantGroup[k]
+                        let secondParticipant = participantGroup[j]
+                        numberOfMatches++
+                        let newMatch = MatchRepository.create({championship, firstParticipant, secondParticipant, name: `${firstParticipant.name} vs ${secondParticipant.name} ${12*i + numberOfMatches}`, group: 'Fase de grupos', number: 12*i + numberOfMatches, firstParticipantPoints: 0, secondParticipantPoints: 0})
+
+                        await MatchRepository.save(newMatch)
+                    }
+
+                }
+            }
+
+
+        }
+
+
+
+
+        console.log(participantList)
+
+
         
     }
 

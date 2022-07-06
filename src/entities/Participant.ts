@@ -14,6 +14,12 @@ export class Participant {
     @Column()
     public email: string;
 
+    @Column()
+    public wins: number;
+
+    @Column()
+    public order : number
+
     @OneToOne(type => User, {
         eager: true
     })
