@@ -3,6 +3,7 @@ import {AppDataSource} from '../database/dataSource'
 import { User } from '../entities/User'
 import bcrypt from 'bcrypt';
 import { Participant } from '../entities/Participant';
+const md5 = require('blueimp-md5');
 
 type CreateUserRequest = {
     username: string;
@@ -86,7 +87,9 @@ export class UserService {
     async isPasswordCorrect(password: string, encryptedCorrectPassword: string) {
         return await bcrypt.compare(password, encryptedCorrectPassword);
     }
-
+    getAvatarURL(email: string) {
+        return `https://www.gravatar.com/avatar/${md5(email)}?s=1024`;
+    }
     async getAll() {
         const userRepository = AppDataSource.getRepository(User);
 

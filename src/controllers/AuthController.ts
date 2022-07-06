@@ -45,6 +45,7 @@ export class AuthController {
         return res.status(200).json({
             message: "Usuário " + user.username + " logado com sucesso!",
             email: user.email,
+            avatarURL: service.getAvatarURL(email),
             info,
             token
         });
