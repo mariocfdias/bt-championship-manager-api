@@ -19,10 +19,12 @@ export class AuthController {
         if (!isCorrect) {
             return res.status(401).json({message: "Senha incorreta!"});
         }
-        const token = jwt.sign({ 
+        const info = {
             id: user.id,
+            name: user.username,
             type: user.type
-        }, process.env.JWT_KEY, { expiresIn: '1h' });
+        };
+        const token = jwt.sign(info, process.env.JWT_KEY, { expiresIn: '1h' });
         /* #swagger.parameters['Login'] = {
                in: 'body',
                description: 'Informações do login.',
@@ -42,11 +44,8 @@ export class AuthController {
         //return res.status(200).json(result)
         return res.status(200).json({
             message: "Usuário " + user.username + " logado com sucesso!",
-            user: {
-                id: user.id,
-                type : user.type,
-                token
-            }
+            info,
+            token
         });
     }
 
