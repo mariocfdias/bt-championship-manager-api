@@ -86,7 +86,7 @@ export class UserService {
             relations:["championships"]
         })
 
-        return {championships: result, matches: matchResult}
+        return {championships: result.map(e => e.championships), matches: matchResult}
     }
 
     async findByEmail(email: string) {
