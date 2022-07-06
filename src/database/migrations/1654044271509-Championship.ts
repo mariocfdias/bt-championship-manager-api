@@ -83,7 +83,7 @@ export class Championship1654044271509 implements MigrationInterface {
                       columnNames: ["location_id"],
                       onDelete: "CASCADE",
                       onUpdate: "CASCADE",
-                    },
+                    }
                 ]
             }))
     }

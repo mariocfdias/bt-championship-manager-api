@@ -2,6 +2,7 @@ import { StringifyOptions } from 'querystring';
 import {AppDataSource} from '../database/dataSource'
 import { User } from '../entities/User'
 import bcrypt from 'bcrypt';
+import { Participant } from '../entities/Participant';
 
 type CreateUserRequest = {
     username: string;
@@ -58,6 +59,18 @@ export class UserService {
 
         return user;
 
+    }
+
+    async getMatchesByEmail({email} : any){
+        console.log('teste')
+        const repository = AppDataSource.getRepository(Participant);
+
+        const result = await repository.find({
+            where: {email},
+            relations:["championships"]
+        })
+
+        return result
     }
 
     async findByEmail(email: string) {

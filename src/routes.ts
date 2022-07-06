@@ -31,6 +31,9 @@ routes.post("/users", new UserController().create)
 routes.delete("/users", new UserController().delete)
 routes.patch("/users", new UserController().update)
 
+routes.get("/users/getChampionships", new UserController().getMatchesByEmail)
+
+
 routes.post("/championships", new ChampionshipController().create)
 routes.patch("/championships", new ChampionshipController().update)
 routes.delete("/championships", new ChampionshipController().delete)

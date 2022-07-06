@@ -15,7 +15,7 @@ export class Match1654044290809 implements MigrationInterface {
                     {
                         name: 'name',
                         type: 'varchar',
-                        isUnique: true
+                        isUnique: false
                     },
                     {
                         name: 'first_participant_id',

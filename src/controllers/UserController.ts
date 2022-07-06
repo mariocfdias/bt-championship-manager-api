@@ -50,6 +50,17 @@ export class UserController {
         return res.status(200).json(result)
     }
 
+    async getMatchesByEmail(req : Request, res: Response){
+        const { email} = req.query
+
+        const service = new UserService();
+
+        const result = await service.getMatchesByEmail({email})
+
+        return res.status(200).json(result)
+
+    }
+
     async delete(req : Request, res: Response){
          /* 	
          #swagger.tags = ['User']
