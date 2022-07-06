@@ -52,7 +52,7 @@ export class ChampionshipService {
 
 
         const championship = ChampionshipRepository.create({
-            category, name, numberOfParticipants, description, location, enrollStartDate: new Date(enrollStartDate), enrollEndDate: new Date(enrollEndDate), startDate: new Date(startDate), endDate: new Date(endDate)
+            state: "Aberto", finishedMatches: 0, category, name, numberOfParticipants, description, location, enrollStartDate: new Date(enrollStartDate), enrollEndDate: new Date(enrollEndDate), startDate: new Date(startDate), endDate: new Date(endDate)
         })
 
         await ChampionshipRepository.save(championship);

@@ -19,6 +19,12 @@ export class Championship {
     public numberOfParticipants: number;
 
     @Column()
+    public state: string;
+
+    @Column()
+    public finishedMatches: number;
+
+    @Column()
     public description: string;
 
     @Column()

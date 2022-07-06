@@ -57,6 +57,18 @@ export class Championship1654044271509 implements MigrationInterface {
 
                     },
                     {
+                        name: 'finishedMatches',
+                        type: 'number',
+                        isUnique: false
+
+                    },
+                    {
+                        name: 'state',
+                        type: 'varchar',
+                        isUnique: false
+
+                    },
+                    {
                         name: 'location_id',
                         type: 'uuid',
                         isUnique: false
