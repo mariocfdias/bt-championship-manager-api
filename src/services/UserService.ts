@@ -4,6 +4,7 @@ import { User } from '../entities/User'
 import bcrypt from 'bcrypt';
 import { Participant } from '../entities/Participant';
 const md5 = require('blueimp-md5');
+import { Match } from '../entities/Match';
 
 type CreateUserRequest = {
     username: string;
@@ -63,15 +64,29 @@ export class UserService {
     }
 
     async getMatchesByEmail({email} : any){
-        console.log('teste')
         const repository = AppDataSource.getRepository(Participant);
+        const matchRepository = AppDataSource.getRepository(Match);
+        const firstParticipantMatchResult = await matchRepository.find({
+            where:{
+                firstParticipant: {email}
+            }
+        })
+        const secondParticipantMatchResult = await matchRepository.find({
+            where:{
+                secondParticipant: {email}
+            }
+        })
 
+        const matchResult = [...firstParticipantMatchResult, ...secondParticipantMatchResult]
+
+
+         console.log(matchResult)
         const result = await repository.find({
             where: {email},
             relations:["championships"]
         })
 
-        return result
+        return {championships: result, matches: matchResult}
     }
 
     async findByEmail(email: string) {
