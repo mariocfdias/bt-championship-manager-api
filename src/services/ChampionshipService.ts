@@ -81,7 +81,9 @@ export class ChampionshipService {
 
         if(!championship) return new Error('Campeonato não encontrado')
         if(championship.numberOfParticipants <= championship.participants.length) {
+            if(championship.state == "Aberto"){
             await this.generateMatches({championshipId})
+        }
             return new Error("Numero maximo de participantes atingido")
         }
     
@@ -140,11 +142,30 @@ export class ChampionshipService {
             await ChampionshipRepository.save(championship);
             
             //return championship;
-            return new Error('teste')
             
         }
         
-        
+        async generateQualifiers({championshipId}){
+
+        }
+
+        async getParticipants({championshipId}){
+            const ParticipantRepository = AppDataSource.getRepository(Participant);
+
+            const participants = await ParticipantRepository.find({
+                relations: ['championship'],
+                where: {
+                    championship: {
+                        id: championshipId
+                    }
+                }
+               })
+
+               return participants
+
+
+        }
+
         async generateMatches({championshipId}){
             const MatchRepository = AppDataSource.getRepository(Match);
             const ChampionshipRepository = AppDataSource.getRepository(Championship);
@@ -197,6 +218,11 @@ export class ChampionshipService {
 
         }
 
+        championship.state="Fase de grupos"
+        ChampionshipRepository.save(championship)
+
+
+
 
 
 
@@ -211,7 +237,15 @@ export class ChampionshipService {
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
 
         const championships = ChampionshipRepository.find({
-            relations: ["participants", "matches"]
+            relations: ["participants", "matches"],
+            order: {
+                participants: {
+                    order: "ASC"
+                },
+                matches: {
+                    number: "ASC"
+                }
+            }
         });
 
         return championships;

@@ -17,6 +17,7 @@ routes.post("/auth/register", new AuthController().register)
 
 routes.get("/locations", new LocationController().getAll)
 routes.get("/championships", new ChampionshipController().getAll)
+routes.get("/championships/participants", new ChampionshipController().getParticipants)
 
 // Rotas que precisam de permissão de admin
 routes.use(authAdmin);

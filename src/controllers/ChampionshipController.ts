@@ -32,6 +32,17 @@ export class ChampionshipController {
         return res.status(201).json(result)
     }
 
+    async getParticipants(req: Request, res: Response){
+        const { id } = req.query;
+
+        const service = new ChampionshipService();
+
+        const participants = await service.getParticipants({championshipId: id})
+
+        return res.status(200).json(participants)
+
+    }
+
     async enroll(req : Request, res: Response){
         /* 	
          #swagger.tags = ['Championships']
@@ -62,7 +73,7 @@ export class ChampionshipController {
             return res.status(400).json(result.message)
         }
 
-        return res.status(200).json(result)
+        return res.status(204)
     }
 
     async getAll(req : Request, res: Response){

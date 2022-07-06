@@ -80,6 +80,7 @@ export class MatchService {
 
     async update({id, firstParticipantPoints, secondParticipantPoints} : any) {
         const MatchRepository = AppDataSource.getRepository(Match);
+        const ParticipantRepository = AppDataSource.getRepository(Participant);
 
         const match = await MatchRepository.findOne({
             where: {
@@ -95,6 +96,11 @@ export class MatchService {
 
         if(firstParticipantPoints > secondParticipantPoints) match.firstParticipant.wins += 1
         if(firstParticipantPoints < secondParticipantPoints) match.secondParticipant.wins += 1
+
+        ParticipantRepository.save(match.firstParticipant)
+        ParticipantRepository.save(match.secondParticipant)
+
+
         
 
 
