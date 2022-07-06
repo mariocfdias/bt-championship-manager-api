@@ -16,13 +16,13 @@ export class Match {
         eager: true
     })
     @JoinColumn({ name : "first_participant_id" })
-    public firstParticipant : User
+    public firstParticipant : Participant
 
     @OneToOne(() => Participant, user => user.id, {
         eager: true
     })
     @JoinColumn({ name : "second_participant_id" })
-    public secondParticipant: User
+    public secondParticipant: Participant
 
     @Column()
     public firstParticipantPoints : number;

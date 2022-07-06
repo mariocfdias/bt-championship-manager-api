@@ -17,6 +17,14 @@ export class Participant1656978492817 implements MigrationInterface {
                         type: 'varchar'
                     },
                     {
+                        name: 'wins',
+                        type: 'number'
+                    },
+                    {
+                        name: 'order',
+                        type: 'number'
+                    },
+                    {
                         name: 'email',
                         type: 'varchar'                    
                     },
