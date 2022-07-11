@@ -109,8 +109,12 @@ export class UserController {
 
     console.log(req.query)
     const {id} = req.query
+
     const blobService = new BlobService()
     const userService = new UserService()
+
+    let userDoExist = await userService.exists({id})
+    if(!userDoExist) return res.status(404).json({Error: "Usuario não existente"})
 
     const url = await blobService.generateBlob({userId: id, image: req.body})
 

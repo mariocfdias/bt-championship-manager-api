@@ -63,6 +63,14 @@ export class UserService {
 
     }
 
+    async exists({id} : any){
+        const userRepository = AppDataSource.getRepository(User);
+
+        const user = await userRepository.findOneBy({id});
+
+        return user ? true : false;
+    }
+
     async getMatchesByEmail({email} : any){
         const repository = AppDataSource.getRepository(Participant);
         const matchRepository = AppDataSource.getRepository(Match);
