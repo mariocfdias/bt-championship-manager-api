@@ -29,7 +29,7 @@ export class UserController {
                 // #swagger.responses[401] = { description: 'Usuario não autenticado' }
 
         // #swagger.responses[400] = { description: 'Existem erros de validação' }
-        return res.status(201).json({message: 'Usuário criado com sucesso!'})
+        return res.status(201).json(result)
     }
     
 
