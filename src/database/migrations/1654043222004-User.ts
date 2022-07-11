@@ -17,6 +17,12 @@ export class User1654043222004 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'url',
+                        type: 'varchar',
+                        isNullable: true               
+
+                    },
+                    {
                         name: 'password',
                         type: 'varchar'                    
                     },

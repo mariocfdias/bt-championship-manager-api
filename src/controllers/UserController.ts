@@ -1,6 +1,7 @@
 import {Request, Response} from 'express'
 import { UserService } from '../services/UserService'
-
+import { BlobService } from '../services/BlobService';
+import { ChampionshipController } from './ChampionshipController';
 export class UserController {
     async create(req : Request, res: Response){
          /* 	
@@ -102,6 +103,20 @@ export class UserController {
 
        // #swagger.responses[404] = { description: 'Usuario não existente' }
        return res.status(204).json(result)
+   }
+
+   async uploadImage(req: Request, res: Response){
+
+    console.log(req.query)
+    const {id} = req.query
+    const blobService = new BlobService()
+    const userService = new UserService()
+
+    const url = await blobService.generateBlob({userId: id, image: req.body})
+
+    userService.updateImage({userId: id, url: url})
+
+    return res.status(200).json({url})
    }
 
 }

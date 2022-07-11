@@ -4,8 +4,8 @@ import { UserController } from "./controllers/UserController"
 import { ChampionshipController } from "./controllers/ChampionshipController"
 import { AuthController } from "./controllers/AuthController"
 import { MatchController } from "./controllers/MatchController"
-import { auth } from "./middleware/auth"
-import { authAdmin } from "./middleware/authAdmin"
+import bodyParser from "body-parser"
+
 
 const routes = Router()
 
@@ -49,5 +49,6 @@ routes.post("/matches", new MatchController().create)
 routes.patch("/matches", new MatchController().consolidate)
 routes.get("/matches", new MatchController().getAll)
 
+routes.post("/upload",bodyParser.raw({ type: "image/*", limit: '10mb'}), new UserController().uploadImage)
 
 export { routes }

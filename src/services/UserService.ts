@@ -114,6 +114,23 @@ export class UserService {
 
     }
 
+    async updateImage({userId, url}){
+        const userRepository = AppDataSource.getRepository(User);
+
+        
+        const existsUser = await userRepository.findOneBy({
+            id: userId
+        })
+
+        if(!existsUser){
+            return Error('Esse usuario não existe')
+        }
+
+        existsUser.url = url
+
+        return userRepository.save(existsUser)
+    }
+
 
     async delete(id : string) {
         const userRepository = AppDataSource.getRepository(User);
