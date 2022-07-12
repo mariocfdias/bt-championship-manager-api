@@ -235,7 +235,7 @@ export class ChampionshipService {
         const ChampionshipRepository = AppDataSource.getRepository(Championship);
 
         const championships = ChampionshipRepository.find({
-            relations: ["participants", "matches"],
+            relations: ["participants", "matches", "matches.firstParticipant.user", "matches.secondParticipant.user"],
             order: {
                 participants: {
                     order: "ASC"
@@ -257,7 +257,7 @@ export class ChampionshipService {
             where: {
                 id
             },
-            relations: ["participants", "matches"]
+            relations: ["participants", "matches", "matches.firstParticipant.user", "matches.secondParticipant.user"],
         });
 
         if(!championship){

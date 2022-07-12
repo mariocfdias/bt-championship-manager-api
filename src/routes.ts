@@ -49,6 +49,6 @@ routes.post("/matches", new MatchController().create)
 routes.patch("/matches", new MatchController().consolidate)
 routes.get("/matches", new MatchController().getAll)
 
-routes.post("/upload",bodyParser.raw({ type: "image/*", limit: '10mb'}), new UserController().uploadImage)
+routes.post("/upload",bodyParser.raw({ type: "image/*", limit: '5mb'}), new UserController().uploadImage)
 
 export { routes }

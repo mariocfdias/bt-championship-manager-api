@@ -36,7 +36,7 @@ export class Match {
     @Column()
     public number: number;
 
-    @ManyToOne(type => Championship, championship => championship.matches)
+    @ManyToOne(type => Championship, championship => championship.matches, {eager: true})
     @JoinColumn({ name : "championship_id" })
     public championship : Championship
 

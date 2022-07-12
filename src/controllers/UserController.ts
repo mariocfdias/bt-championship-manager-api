@@ -116,6 +116,7 @@ export class UserController {
     let userDoExist = await userService.exists({id})
     if(!userDoExist) return res.status(404).json({Error: "Usuario não existente"})
 
+    console.log(req.body)
     const url = await blobService.generateBlob({userId: id, image: req.body})
 
     userService.updateImage({userId: id, url: url})

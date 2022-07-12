@@ -45,7 +45,7 @@ export class AuthController {
         return res.status(200).json({
             message: "Usuário " + user.username + " logado com sucesso!",
             email: user.email,
-            avatarURL: service.getAvatarURL(email),
+            url: user.url,
             info,
             token
         });
@@ -78,6 +78,6 @@ export class AuthController {
         if (result instanceof Error){
             return res.status(400).json({ message: result.message})
         }
-        return res.status(201).json({ message: 'Usuário cadastrado.'});
+        return res.status(201).json(result);
     }
 }

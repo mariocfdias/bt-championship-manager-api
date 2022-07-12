@@ -49,8 +49,8 @@ export class ChampionshipController {
          #swagger.description = 'Rota para a inscrição de atletas em campeonatos'
         */
         console.log(req.body)
-        const { name, email,championshipId } = req.body;
-
+        const { name, email } = req.body;
+        const {id : championshipId} = req.query
         const service = new ChampionshipService();
 /* #swagger.parameters['Inscrever em campeonato'] = {
                in: 'body',
